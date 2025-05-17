@@ -1,8 +1,10 @@
 package model;
 
+import Service.IEntrada;
+
 import java.util.Date;
 
-public class Entrada {
+public class Entrada implements IEntrada {
     private String id;
     private String codigoEspectaculo;
     private String sede;
@@ -19,5 +21,15 @@ public class Entrada {
         this.numeroAsiento = numeroAsiento;
         this.precio = precio;
         this.fecha = fecha;
+    }
+
+    @Override
+    public double precio() {
+        return 0;
+    }
+
+    @Override
+    public String ubicacion() {
+        return "";
     }
 }
