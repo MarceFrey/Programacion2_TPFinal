@@ -11,5 +11,4 @@ public class Entrada {
     private int precio;
     private Date fecha;
 
-
 }
