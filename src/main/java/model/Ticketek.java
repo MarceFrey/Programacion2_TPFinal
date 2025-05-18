@@ -1,19 +1,17 @@
 package model;
 import Service.IEntrada;
 import Service.ITicketek;
-
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class Ticketek implements ITicketek {
-    List<Estadio> estadios = new ArrayList<>();
-    List<Teatro> teatros = new ArrayList<>();
-    List<MicroEstadio> microEstadios = new ArrayList<>();
-    List<Usuario> usuarios = new ArrayList<>();
-    List<Espectaculo> espectaculos = new ArrayList<>();
-    List<Funcion> funciones = new ArrayList<>();
+    Set<Estadio> estadios = new HashSet<>();
+    Set<Teatro> teatros = new HashSet<>();
+    Set<MicroEstadio> microEstadios = new HashSet<>();
+    Set<Usuario> usuarios = new HashSet<>();
+    Set<Espectaculo> espectaculos = new HashSet<>();
+    Set<Funcion> funciones = new HashSet<>();
 
     public Ticketek() {
     }
@@ -23,7 +21,7 @@ public class Ticketek implements ITicketek {
         if (estadios.contains(nombre)){
             throw new RuntimeException("el nombre del estadio ya existe");
         }else{
-            estadios.add(new Estadio(nombre,capacidadMaxima,direccion));
+
         }
     }
 
@@ -68,7 +66,7 @@ public class Ticketek implements ITicketek {
         if (espectaculos.contains(nombreEspectaculo)){
             funciones.add(new Funcion(nombreEspectaculo, sede, fecha, precioBase));
         }else{
-
+            throw new RuntimeException("el nombre del espectaculo no existe");
         }
     }
 

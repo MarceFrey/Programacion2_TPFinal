@@ -1,5 +1,7 @@
 package Service;
 
+import model.Estadio;
+
 import java.util.List;
 
 public interface ITicketek {
@@ -301,4 +303,8 @@ public interface ITicketek {
      * @return
      */
     double totalRecaudadoPorSede(String nombreEspectaculo, String nombreSede);
+
+    //-----------------------------------------------------------------//
+
+    List<Estadio> getEstadios();
 }
