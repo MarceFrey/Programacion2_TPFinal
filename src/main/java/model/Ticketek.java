@@ -9,12 +9,17 @@ import java.util.Set;
 
 public class Ticketek implements ITicketek {
     List<Estadio> estadios = new ArrayList<>();
-
+    List<Teatro> teatros = new ArrayList<>();
+    List<MicroEstadio> microEstadios = new ArrayList<>();
+    List<Usuario> usuarios = new ArrayList<>();
+    List<Espectaculo> espectaculos = new ArrayList<>();
+    List<Funcion> funciones = new ArrayList<>();
 
     public Ticketek() {
     }
 
     @Override
+    //Registro de estadios
     public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
         for (Estadio estadio : estadios){
             if (estadio.getNombre().equals(nombre)){
@@ -29,14 +34,27 @@ public class Ticketek implements ITicketek {
     }
 
     @Override
+    //Registro de teatros
     public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
-
+        for (Teatro teatro : teatros){
+            if (teatro.getNombre().equals(nombre)){
+                throw new RuntimeException("el nombre del teatro ya existe");
+            }
+        }
+        teatros.add(new Teatro(nombre,capacidadMaxima,direccion,asientosPorFila,sectores, capacidad,porcentajeAdicional));
     }
 
     @Override
+    //registro de microestadios
     public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, int cantidadPuestos, double precioConsumicion, String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
-
+        for (MicroEstadio microEstadio : microEstadios){
+            if (microEstadio.getNombre().equals(nombre)){
+                throw new RuntimeException("el nombre del microestadio ya existe");
+            }
+        }
+        microEstadios.add(new MicroEstadio(nombre,capacidadMaxima,direccion,asientosPorFila,sectores, capacidad,porcentajeAdicional, cantidadPuestos, precioConsumicion));
     }
+
 
     @Override
     public void registrarUsuario(String email, String nombre, String apellido, String contrasenia) {
