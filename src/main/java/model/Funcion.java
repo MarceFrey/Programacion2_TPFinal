@@ -14,4 +14,12 @@ public class Funcion {
         this.fecha = fecha;
         this.precioBase = precioBase;
     }
+
+    public String getNombreEspectaculo() {
+        return nombreEspectaculo;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
 }

@@ -58,17 +58,34 @@ public class Ticketek implements ITicketek {
 
     @Override
     public void registrarUsuario(String email, String nombre, String apellido, String contrasenia) {
-
+        for (Usuario usuario : usuarios){
+            if (usuario.getEmail().equals(email)){
+                throw new RuntimeException("el email ya existe");
+            }
+        }
+        usuarios.add(new Usuario(email,nombre,apellido,contrasenia));
     }
+
 
     @Override
     public void registrarEspectaculo(String nombre) {
-
+        for (Espectaculo espectaculo : espectaculos){
+            if (espectaculo.getNombre().equals(nombre)){
+                throw new RuntimeException("el espectaculo ya existe");
+            }
+        }
+        espectaculos.add(new Espectaculo(nombre));
     }
+
 
     @Override
     public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
-
+        for (Funcion funcion : funciones){
+            if (funcion.getNombreEspectaculo().equals(nombreEspectaculo) && funcion.getFecha().equals(fecha)){
+                    throw new RuntimeException("ya existe una fecha para la función");
+            }
+        }
+        funciones.add(new Funcion(nombreEspectaculo, sede, fecha, precioBase));
     }
 
     @Override

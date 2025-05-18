@@ -16,7 +16,19 @@ public class Usuario {
         this.contrasenia = contrasenia;
     }
 
-    public void setEntradas(List<Entrada> entradas) {
-        this.entradas = entradas;
+    public String getEmail() {
+        return email;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
     }
 }

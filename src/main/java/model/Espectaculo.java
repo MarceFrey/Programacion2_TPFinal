@@ -11,4 +11,8 @@ public class Espectaculo {
         this.nombre = nombre;
         this.codigo = codigo +1;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
 }

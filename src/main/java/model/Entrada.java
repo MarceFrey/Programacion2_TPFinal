@@ -5,7 +5,7 @@ import Service.IEntrada;
 import java.util.Date;
 
 public class Entrada implements IEntrada {
-    private String id;
+    private int id=0;
     private String codigoEspectaculo;
     private String sede;
     private String sector;
@@ -13,8 +13,8 @@ public class Entrada implements IEntrada {
     private int precio;
     private Date fecha;
 
-    public Entrada(String id, String codigoEspectaculo, String sede, String sector, String numeroAsiento, int precio, Date fecha) {
-        this.id = id;
+    public Entrada(String codigoEspectaculo, String sede, String sector, String numeroAsiento, int precio, Date fecha) {
+        this.id = id +1;
         this.codigoEspectaculo = codigoEspectaculo;
         this.sede = sede;
         this.sector = sector;
