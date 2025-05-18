@@ -3,11 +3,11 @@ package model;
 public class SedeConSectores extends Sede{
     private Integer asientoPorFila;
     private String [] sectores;
-    private Integer [] capacidad;
-    private Integer [] porcentajeAdic;
+    private int[] capacidad;
+    private int [] porcentajeAdic;
 
     public SedeConSectores(String nombre, Integer capacidadMax, String direccion, Integer asientoPorFila,
-                           String[] sectores, Integer[] capacidad, Integer[] porcentajeAdic) {
+                           String[] sectores, int[] capacidad, int[] porcentajeAdic) {
         super(nombre, capacidadMax, direccion);
         this.asientoPorFila = asientoPorFila;
         this.sectores = sectores;

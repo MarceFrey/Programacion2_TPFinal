@@ -5,11 +5,10 @@ import java.util.ArrayList;
 public class Espectaculo {
     private String nombre;
     private ArrayList<Funcion> funciones;
-    private String codigo;
+    private int codigo = 0;
 
-    public Espectaculo(String nombre, ArrayList<Funcion> funciones, String codigo) {
+    public Espectaculo(String nombre) {
         this.nombre = nombre;
-        this.funciones = funciones;
-        this.codigo = codigo;
+        this.codigo = codigo +1;
     }
 }

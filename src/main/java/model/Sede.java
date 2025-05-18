@@ -10,4 +10,16 @@ public class Sede {
         this.capacidadMax = capacidadMax;
         this.direccion = direccion;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Integer getCapacidadMax() {
+        return capacidadMax;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
 }
