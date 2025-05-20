@@ -19,9 +19,6 @@ public class Main {
         ticketek.registrarSede("Mario Kempes", "avenida 123", 300);
         ticketek.registrarSede("Estadio Único", "boulevard 456", 400);
 
-
-        System.out.println("ESTADIOSSS :" + ticketek.getEstadios().size());
-
         // // Auxiliares para registrar sedes con sectores
         String[] sectores_teatro = {"Platea VIP", "Platea Común", "Platea Baja", "Platea Alta"};
         int[] capacidad_teatro = {100, 200, 300, 400};
@@ -159,6 +156,8 @@ public class Main {
 
         printEmpresa(ticketek, "Fin de la simulación");
 
+        //---------------------------------------PRUEBAS-----------------------------------------------------------------------
+
     }
 
     private static void printEmpresa(ITicketek ticketek, String msg) {
@@ -168,6 +167,8 @@ public class Main {
         System.out.println(ticketek);
         System.out.println("\n==========================================\n");
     }
+
+
 
 
 

@@ -29,10 +29,6 @@ public class Ticketek implements ITicketek {
         estadios.add(new Estadio(nombre,capacidadMaxima,direccion));
     }
 
-    public List<Estadio> getEstadios() {
-        return estadios;
-    }
-
     @Override
     //Registro de teatros
     public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
@@ -55,8 +51,8 @@ public class Ticketek implements ITicketek {
         microEstadios.add(new MicroEstadio(nombre,capacidadMaxima,direccion,asientosPorFila,sectores, capacidad,porcentajeAdicional, cantidadPuestos, precioConsumicion));
     }
 
-
     @Override
+    //registro de usuarios
     public void registrarUsuario(String email, String nombre, String apellido, String contrasenia) {
         for (Usuario usuario : usuarios){
             if (usuario.getEmail().equals(email)){
@@ -66,8 +62,8 @@ public class Ticketek implements ITicketek {
         usuarios.add(new Usuario(email,nombre,apellido,contrasenia));
     }
 
-
     @Override
+    //registro de espectaculo
     public void registrarEspectaculo(String nombre) {
         for (Espectaculo espectaculo : espectaculos){
             if (espectaculo.getNombre().equals(nombre)){
@@ -77,8 +73,8 @@ public class Ticketek implements ITicketek {
         espectaculos.add(new Espectaculo(nombre));
     }
 
-
     @Override
+    //registro de funcion
     public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
         for (Funcion funcion : funciones){
             if (funcion.getNombreEspectaculo().equals(nombreEspectaculo) && funcion.getFecha().equals(fecha)){
@@ -90,7 +86,39 @@ public class Ticketek implements ITicketek {
 
     @Override
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas) {
-        return List.of();
+        List<IEntrada> entradasAVender = new ArrayList<>();
+        for(int i = 0 ; i < cantidadEntradas ; i++){
+            entradasAVender.add(new Entrada(fecha));
+        }
+
+        boolean existeEspectaculo = false;
+        boolean existeEmail = false;
+        boolean existeContrasenia = false;
+
+        for(Espectaculo espectaculo : espectaculos){
+            existeEspectaculo = existeEspectaculo || espectaculo.getNombre().equals(nombreEspectaculo);
+        }
+        for(Usuario usuario : usuarios){
+            existeEmail = existeEmail || usuario.getEmail().equals(email);
+            existeContrasenia = existeContrasenia || usuario.getContrasenia().equals(contrasenia);
+            System.out.println(usuario.getEmail());
+        }
+
+        if(!existeEspectaculo){
+            throw new RuntimeException("Espectaculo invalido");
+        }
+        if(!existeEmail){
+            throw new RuntimeException("Espectaculo invalido");
+        }
+        if(!existeContrasenia){
+            throw new RuntimeException("Espectaculo invalido");
+        }
+
+        for(Usuario usuario : usuarios) {
+            usuario.setEntradas(entradasAVender);
+        }
+
+        return entradasAVender;
     }
 
     @Override
@@ -151,5 +179,11 @@ public class Ticketek implements ITicketek {
     @Override
     public double totalRecaudadoPorSede(String nombreEspectaculo, String nombreSede) {
         return 0;
+    }
+
+    //---------------------------------------PRUEBAS-----------------------------------------------------------------------
+
+    public List<Estadio> getEstadios() {
+        return estadios;
     }
 }
