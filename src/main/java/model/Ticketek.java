@@ -123,7 +123,38 @@ public class Ticketek implements ITicketek {
 
     @Override
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, String sector, int[] asientos) {
-        return List.of();
+        List<IEntrada> entradasAVender = new ArrayList<>();
+        for(int i = 0 ; i < asientos.length ; i++){
+            entradasAVender.add(new Entrada(nombreEspectaculo, sector, asientos[i], fecha));
+        }
+        boolean existeEspectaculo = false;
+        boolean existeEmail = false;
+        boolean existeContrasenia = false;
+
+
+        for(Espectaculo espectaculo : espectaculos){
+            existeEspectaculo = existeEspectaculo || espectaculo.getNombre().equals(nombreEspectaculo);
+        }
+        for(Usuario usuario : usuarios){
+            existeEmail = existeEmail || usuario.getEmail().equals(email);
+            existeContrasenia = existeContrasenia || usuario.getContrasenia().equals(contrasenia);
+            System.out.println(usuario.getEmail());
+        }
+
+        if(!existeEspectaculo){
+            throw new RuntimeException("Espectaculo invalido");
+        }
+        if(!existeEmail){
+            throw new RuntimeException("Espectaculo invalido");
+        }
+        if(!existeContrasenia){
+            throw new RuntimeException("Espectaculo invalido");
+        }
+        if(asientos.length == 0){
+            throw new RuntimeException("Espectaculo invalido");
+        }
+
+        return entradasAVender;
     }
 
     @Override

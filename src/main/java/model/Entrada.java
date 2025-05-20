@@ -9,17 +9,16 @@ public class Entrada implements IEntrada {
     private String codigoEspectaculo;
     private String sede;
     private String sector;
-    private String numeroAsiento;
+    private int numeroAsiento;
     private int precio;
     private String fecha;
 
-    public Entrada(String codigoEspectaculo, String sede, String sector, String numeroAsiento, int precio, String fecha) {
+    public Entrada(String nombreEspectaculo, String sector, int numeroAsiento, String fecha) {
         this.id = id +1;
         this.codigoEspectaculo = codigoEspectaculo;
-        this.sede = sede;
         this.sector = sector;
         this.numeroAsiento = numeroAsiento;
-        this.precio = precio;
+        //this.precio = precio;
         this.fecha = fecha;
     }
 
