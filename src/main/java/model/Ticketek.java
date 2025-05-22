@@ -87,8 +87,10 @@ public class Ticketek implements ITicketek {
     @Override
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas) {
         List<IEntrada> entradasAVender = new ArrayList<>();
-        for(int i = 0 ; i < cantidadEntradas ; i++){
-            entradasAVender.add(new Entrada(fecha));
+        for(Funcion funcion : funciones){
+            if(funcion.getNombreEspectaculo().equals(nombreEspectaculo) && entradasAVender.size() < cantidadEntradas){
+                entradasAVender.add(new Entrada(fecha, funcion.getPrecioBase()));
+            }
         }
 
         boolean existeEspectaculo = false;
@@ -159,7 +161,11 @@ public class Ticketek implements ITicketek {
 
     @Override
     public String listarFunciones(String nombreEspectaculo) {
-        return "";
+        String auxFuncion = "";
+        for(Funcion funcion : funciones){
+            auxFuncion = funcion.toString();
+        }
+        return auxFuncion;
     }
 
     @Override
@@ -216,5 +222,17 @@ public class Ticketek implements ITicketek {
 
     public List<Estadio> getEstadios() {
         return estadios;
+    }
+
+    public void  verFunciones() {
+        for (Funcion funcion : funciones) {
+            System.out.println("PROBANDO FUNCIONES : " + funcion.getNombreEspectaculo() + funcion.getPrecioBase() + funcion.getFecha());
+        }
+    }
+
+    public void verTeatros(){
+        for (Teatro teatro : teatros){
+            System.out.println(teatro.toString());
+        }
     }
 }

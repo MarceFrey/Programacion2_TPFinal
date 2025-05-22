@@ -10,7 +10,7 @@ public class Entrada implements IEntrada {
     private String sede;
     private String sector;
     private int numeroAsiento;
-    private int precio;
+    private double precio;
     private String fecha;
 
     public Entrada(String nombreEspectaculo, String sector, int numeroAsiento, String fecha) {
@@ -22,14 +22,15 @@ public class Entrada implements IEntrada {
         this.fecha = fecha;
     }
 
-    public Entrada(String fecha) {
+    public Entrada(String fecha , double precio) {
         this.id = id+1;
         this.fecha = fecha;
+        this.precio = precio;
     }
 
     @Override
     public double precio() {
-        return 0;
+        return this.precio;
     }
 
     @Override

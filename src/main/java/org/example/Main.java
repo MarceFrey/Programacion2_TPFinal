@@ -157,7 +157,8 @@ public class Main {
         printEmpresa(ticketek, "Fin de la simulación");
 
         //---------------------------------------PRUEBAS-----------------------------------------------------------------------
-
+        //ticketek.verFunciones();
+        System.out.println("PROBANDO " + ticketek.listarFunciones("El Rey León"));
     }
 
     private static void printEmpresa(ITicketek ticketek, String msg) {

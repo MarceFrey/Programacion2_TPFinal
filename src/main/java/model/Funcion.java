@@ -22,4 +22,22 @@ public class Funcion {
     public String getFecha() {
         return fecha;
     }
+
+    public double getPrecioBase() {
+        return precioBase;
+    }
+
+    public String getSede() {
+        return sede;
+    }
+
+    @Override
+    public String toString() {
+        return "Funcion{" +
+                "nombreEspectaculo='" + nombreEspectaculo + '\'' +
+                ", sede='" + sede + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", precioBase=" + precioBase +
+                '}';
+    }
 }
