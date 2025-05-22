@@ -5,4 +5,5 @@ public class Teatro extends SedeConSectores{
                   int[] capacidad, int[] porcentajeAdic) {
         super(nombre, capacidadMax, direccion, asientoPorFila, sectores, capacidad, porcentajeAdic);
     }
+
 }

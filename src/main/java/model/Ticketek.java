@@ -2,18 +2,17 @@ package model;
 import Service.IEntrada;
 import Service.ITicketek;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Ticketek implements ITicketek {
-    List<Estadio> estadios = new ArrayList<>();
-    List<Teatro> teatros = new ArrayList<>();
-    List<MicroEstadio> microEstadios = new ArrayList<>();
-    List<Usuario> usuarios = new ArrayList<>();
-    List<Espectaculo> espectaculos = new ArrayList<>();
-    List<Funcion> funciones = new ArrayList<>();
+    private List<Estadio> estadios = new ArrayList<>();
+    private List<Teatro> teatros = new ArrayList<>();
+    private List<MicroEstadio> microEstadios = new ArrayList<>();
+    private List<Usuario> usuarios = new ArrayList<>();
+    private List<Espectaculo> espectaculos = new ArrayList<>();
+    private List<Funcion> funciones = new ArrayList<>();
+    private Map<String, Sede> sedes = new HashMap<>();
+    private Map<String, Integer> entradasVendidasPorSector = new HashMap<>();
 
     public Ticketek() {
     }
@@ -26,7 +25,9 @@ public class Ticketek implements ITicketek {
                 throw new RuntimeException("el nombre del estadio ya existe");
             }
         }
-        estadios.add(new Estadio(nombre,capacidadMaxima,direccion));
+        Estadio estadio = new Estadio(nombre,capacidadMaxima,direccion);
+        estadios.add(estadio);
+        sedes.put(nombre, estadio);
     }
 
     @Override
@@ -37,7 +38,9 @@ public class Ticketek implements ITicketek {
                 throw new RuntimeException("el nombre del teatro ya existe");
             }
         }
-        teatros.add(new Teatro(nombre,capacidadMaxima,direccion,asientosPorFila,sectores, capacidad,porcentajeAdicional));
+        Teatro teatro = new Teatro(nombre,capacidadMaxima,direccion,asientosPorFila,sectores, capacidad,porcentajeAdicional);
+        teatros.add(teatro);
+        sedes.put(nombre , teatro);
     }
 
     @Override
@@ -48,7 +51,10 @@ public class Ticketek implements ITicketek {
                 throw new RuntimeException("el nombre del microestadio ya existe");
             }
         }
-        microEstadios.add(new MicroEstadio(nombre,capacidadMaxima,direccion,asientosPorFila,sectores, capacidad,porcentajeAdicional, cantidadPuestos, precioConsumicion));
+        MicroEstadio microEstadio = new MicroEstadio(nombre,capacidadMaxima,direccion,asientosPorFila,sectores,
+                capacidad,porcentajeAdicional, cantidadPuestos, precioConsumicion);
+        microEstadios.add(microEstadio);
+        sedes.put(nombre , microEstadio);
     }
 
     @Override
@@ -81,15 +87,17 @@ public class Ticketek implements ITicketek {
                     throw new RuntimeException("ya existe una fecha para la función");
             }
         }
-        funciones.add(new Funcion(nombreEspectaculo, sede, fecha, precioBase));
+        funciones.add(new Funcion(nombreEspectaculo, sedes.get(sede), fecha, precioBase));
     }
 
     @Override
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas) {
         List<IEntrada> entradasAVender = new ArrayList<>();
-        for(int i = 0 ; i < cantidadEntradas ; i++){
-
-            entradasAVender.add(new Entrada(fecha));
+        for(Funcion funcion : funciones){
+            if(funcion.getNombreEspectaculo().equals(nombreEspectaculo) && entradasAVender.size() < cantidadEntradas){
+                entradasAVender.add(new Entrada(fecha, funcion.getPrecioBase()));
+                funcion.agregarEntrada(cantidadEntradas);
+            }
         }
 
         boolean existeEspectaculo = false;
@@ -123,11 +131,15 @@ public class Ticketek implements ITicketek {
     }
 
     @Override
-    public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, String sector, int[] asientos) {
+    public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,
+                                        String sector, int[] asientos) {
         List<IEntrada> entradasAVender = new ArrayList<>();
+
         for(int i = 0 ; i < asientos.length ; i++){
             entradasAVender.add(new Entrada(nombreEspectaculo, sector, asientos[i], fecha));
+            entradasVendidasPorSector.put(sector , asientos[i]);
         }
+
         boolean existeEspectaculo = false;
         boolean existeEmail = false;
         boolean existeContrasenia = false;
@@ -139,7 +151,6 @@ public class Ticketek implements ITicketek {
         for(Usuario usuario : usuarios){
             existeEmail = existeEmail || usuario.getEmail().equals(email);
             existeContrasenia = existeContrasenia || usuario.getContrasenia().equals(contrasenia);
-            System.out.println(usuario.getEmail());
         }
 
         if(!existeEspectaculo){
@@ -160,7 +171,39 @@ public class Ticketek implements ITicketek {
 
     @Override
     public String listarFunciones(String nombreEspectaculo) {
-        return "";
+        StringBuilder resultado = new StringBuilder();
+
+        for (Funcion funcion : funciones) {
+            if (funcion.getNombreEspectaculo().equals(nombreEspectaculo)) {
+                Sede sede = funcion.getSede();
+
+                resultado.append(" - (")
+                        .append(funcion.getFecha())
+                        .append(") ")
+                        .append(sede.getNombre())
+                        .append(" - ");
+
+                if (sede instanceof Estadio) {
+                    resultado.append(funcion.getEntradasVendidas())
+                            .append("/")
+                            .append(sede.getCapacidadMax());
+                }
+                else if (sede instanceof SedeConSectores) {
+                    SedeConSectores sedeConSectores = (SedeConSectores) sede;
+                    String[] sectores = sedeConSectores.getSectores();
+                    int[] capacidades = sedeConSectores.getCapacidad();
+
+                    List<String> sectoresInfo = new ArrayList<>();
+                    for (int i = 0; i < sectores.length; i++) {
+                        sectoresInfo.add(sectores[i] + ": " + "/" + capacidades[i]);
+                    }
+                    resultado.append(String.join(" | ", sectoresInfo));
+                }
+
+                resultado.append("\n");
+            }
+        }
+        return resultado.toString();
     }
 
     @Override
@@ -217,5 +260,17 @@ public class Ticketek implements ITicketek {
 
     public List<Estadio> getEstadios() {
         return estadios;
+    }
+
+    public void  verFunciones() {
+        for (Funcion funcion : funciones) {
+            System.out.println("PROBANDO FUNCIONES : " + funcion.getNombreEspectaculo() + funcion.getPrecioBase() + funcion.getFecha());
+        }
+    }
+
+    public void verTeatros(){
+        for (Teatro teatro : teatros){
+            System.out.println(teatro.toString());
+        }
     }
 }
