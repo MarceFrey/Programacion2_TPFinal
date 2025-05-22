@@ -88,6 +88,7 @@ public class Ticketek implements ITicketek {
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas) {
         List<IEntrada> entradasAVender = new ArrayList<>();
         for(int i = 0 ; i < cantidadEntradas ; i++){
+
             entradasAVender.add(new Entrada(fecha));
         }
 

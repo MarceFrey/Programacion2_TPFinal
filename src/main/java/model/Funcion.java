@@ -22,4 +22,6 @@ public class Funcion {
     public String getFecha() {
         return fecha;
     }
+
 }
+
