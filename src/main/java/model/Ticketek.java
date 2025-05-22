@@ -161,11 +161,20 @@ public class Ticketek implements ITicketek {
 
     @Override
     public String listarFunciones(String nombreEspectaculo) {
-        String auxFuncion = "";
-        for(Funcion funcion : funciones){
-            auxFuncion = funcion.toString();
+        StringBuilder resultado = new StringBuilder();
+
+        for (Funcion funcion : funciones) {
+            if (funcion.getNombreEspectaculo().equals(nombreEspectaculo)) {
+                resultado.append(" - (")
+                        .append(funcion.getFecha())
+                        .append(") ")
+                        .append(funcion.getSede())
+                        .append(" - ");
+                resultado.append("\n");
+            }
         }
-        return auxFuncion;
+
+        return resultado.toString();
     }
 
     @Override
