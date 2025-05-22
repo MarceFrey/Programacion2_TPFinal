@@ -158,7 +158,7 @@ public class Main {
 
         //---------------------------------------PRUEBAS-----------------------------------------------------------------------
         //ticketek.verFunciones();
-        //System.out.println(ticketek.listarFunciones("El Rey León"));
+        System.out.println(ticketek.listarFunciones("El Rey León"));
         System.out.println(ticketek.listarFunciones("Coldplay en vivo"));
     }
 

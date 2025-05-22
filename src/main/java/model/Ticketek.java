@@ -188,8 +188,20 @@ public class Ticketek implements ITicketek {
                             .append("/")
                             .append(sede.getCapacidadMax());
                 }
+                else if (sede instanceof SedeConSectores) {
+                    SedeConSectores sedeConSectores = (SedeConSectores) sede;
+                    String[] sectores = sedeConSectores.getSectores();
+                    int[] capacidades = sedeConSectores.getCapacidad();
+
+                    List<String> sectoresInfo = new ArrayList<>();
+                    for (int i = 0; i < sectores.length; i++) {
+                        sectoresInfo.add(sectores[i] + ": " + "/" + capacidades[i]);
+                    }
+                    resultado.append(String.join(" | ", sectoresInfo));
+                }
+
+                resultado.append("\n");
             }
-            resultado.append("\n");
         }
         return resultado.toString();
     }
