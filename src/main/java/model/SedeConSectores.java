@@ -33,13 +33,4 @@ public class SedeConSectores extends Sede{
         return porcentajeAdic;
     }
 
-    @Override
-    public String toString() {
-        return "SedeConSectores{" +
-                "asientoPorFila=" + asientoPorFila +
-                ", sectores=" + Arrays.toString(sectores) +
-                ", capacidad=" + Arrays.toString(capacidad) +
-                ", porcentajeAdic=" + Arrays.toString(porcentajeAdic) +
-                '}';
-    }
 }

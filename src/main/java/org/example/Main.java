@@ -158,7 +158,8 @@ public class Main {
 
         //---------------------------------------PRUEBAS-----------------------------------------------------------------------
         //ticketek.verFunciones();
-        System.out.println("PROBANDO " + ticketek.listarFunciones("El Rey León"));
+        //System.out.println(ticketek.listarFunciones("El Rey León"));
+        System.out.println(ticketek.listarFunciones("Coldplay en vivo"));
     }
 
     private static void printEmpresa(ITicketek ticketek, String msg) {
