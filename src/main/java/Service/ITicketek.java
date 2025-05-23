@@ -306,7 +306,4 @@ public interface ITicketek {
 
     //-----------------------------------------------------------------//
 
-    List<Estadio> getEstadios();
-    void verFunciones();
-    public void verTeatros();
 }

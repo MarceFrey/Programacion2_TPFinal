@@ -1,6 +1,9 @@
 package model;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Funcion {
     private String nombreEspectaculo;
@@ -8,6 +11,8 @@ public class Funcion {
     private String fecha;
     private double precioBase;
     private int entradasVendidas = 0;
+
+    private Map<String, Integer> entradasVendidasPorSector = new HashMap<>();
 
     public Funcion(String nombreEspectaculo, Sede sede, String fecha, double precioBase) {
         this.nombreEspectaculo = nombreEspectaculo;
@@ -34,5 +39,20 @@ public class Funcion {
 
     public int getEntradasVendidas() {
         return entradasVendidas;
+    }
+
+    public void agregarEntrada2(String sector , Integer cantidad){
+        entradasVendidasPorSector.put(sector , cantidad);
+    }
+
+    public Map<String, Integer> getEntradasVendidasPorSector() {
+        return entradasVendidasPorSector;
+    }
+
+    public int getEntradasVendidasPorSector2(String sector) {
+        if(!entradasVendidasPorSector.containsKey(sector))
+            return 0;
+        else
+            return entradasVendidasPorSector.get(sector);
     }
 }
