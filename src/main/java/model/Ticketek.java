@@ -140,6 +140,8 @@ public class Ticketek implements ITicketek {
             entradasVendidasPorSector.put(sector , asientos[i]);
         }
 
+
+
         boolean existeEspectaculo = false;
         boolean existeEmail = false;
         boolean existeContrasenia = false;
@@ -188,8 +190,8 @@ public class Ticketek implements ITicketek {
                             .append("/")
                             .append(sede.getCapacidadMax());
                 }
-                else if (sede instanceof SedeConSectores) {
-                    SedeConSectores sedeConSectores = (SedeConSectores) sede;
+                else if (sede instanceof Teatro) {
+                    Teatro sedeConSectores = (Teatro) sede;
                     String[] sectores = sedeConSectores.getSectores();
                     int[] capacidades = sedeConSectores.getCapacidad();
 
