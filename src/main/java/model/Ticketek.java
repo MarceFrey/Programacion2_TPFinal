@@ -77,27 +77,40 @@ public class Ticketek implements ITicketek {
                     throw new RuntimeException("ya existe una fecha para la función");
             }
         }
-        funciones.put(nombreEspectaculo , new Funcion(nombreEspectaculo, sedes.get(sede), fecha, precioBase));
+        funciones.put(fecha , new Funcion(nombreEspectaculo, sedes.get(sede), fecha, precioBase));
     }
 
     @Override
     //Venta entradas estadio
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas) {
-        if(!usuarios.containsKey(email)){
-            throw new RuntimeException("Usuario invalido");
+        if(!usuarios.containsKey(email)|| !usuarios.get(email).getContrasenia().equals(contrasenia)){
+            throw new RuntimeException("Usuario o contraseña invalido");
         }
 
         if(!espectaculos_.containsKey(nombreEspectaculo)){
             throw new RuntimeException("Espectaculo invalido");
         }
 
-        if(!usuarios.get(email).getContrasenia().equals(contrasenia)){
-            throw new RuntimeException("Contraseña invalida");
-        }
 
         List<IEntrada> entradasAVender = new ArrayList<>();
 
-        for (Funcion funcion : funciones.values()) {
+        for(Funcion funcion : funciones.values()){
+            System.out.println("abc" + funcion.getNombreEspectaculo());
+            if(funcion.getNombreEspectaculo().equals(nombreEspectaculo)){
+                System.out.println(nombreEspectaculo);
+                System.out.println(funcion.getPrecioBase());
+                entradasAVender.add(new Entrada(fecha, funcion.getPrecioBase()));
+                funcion.agregarEntrada(cantidadEntradas);
+            }
+        }
+        System.out.println( "prueba" + entradasAVender.toArray().length);
+        for(Usuario usuario : usuarios.values()) {
+            usuario.setEntradas(entradasAVender);
+        }
+
+        return entradasAVender;
+
+        /*for (Funcion funcion : funciones.values()) {
             if (funcion.getNombreEspectaculo().equals(nombreEspectaculo)) {
                 while (entradasAVender.size() < cantidadEntradas) {
                     entradasAVender.add(new Entrada(fecha, funcion.getPrecioBase()));
@@ -111,7 +124,7 @@ public class Ticketek implements ITicketek {
             usuario.setEntradas(entradasAVender);
         }
 
-        return entradasAVender;
+        return entradasAVender;*/
     }
 
     //Venta entradas sedes con sectores
