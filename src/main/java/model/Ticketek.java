@@ -5,7 +5,6 @@ import Service.ITicketek;
 import java.util.*;
 
 public class Ticketek implements ITicketek {
-    //private List<Funcion> funciones = new ArrayList<>();
 
     private Map<String, Sede> sedes = new HashMap<>();
     private Map<String, Espectaculo> espectaculos_ = new HashMap<>();
@@ -83,33 +82,19 @@ public class Ticketek implements ITicketek {
     @Override
     //Venta entradas estadio
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas) {
-        if(!usuarios.containsKey(email)){
-            throw new RuntimeException("Usuario invalido");
-        }
-
-        if(!espectaculos_.containsKey(nombreEspectaculo)){
-            throw new RuntimeException("Espectaculo invalido");
-        }
-
-        if(!usuarios.get(email).getContrasenia().equals(contrasenia)){
-            throw new RuntimeException("Contraseña invalida");
-        }
+        if(!espectaculos_.containsKey(nombreEspectaculo)){throw new RuntimeException("Espectaculo invalido");}
+        if(!usuarios.containsKey(email)){throw new RuntimeException("Usuario invalido");}
+        if(!usuarios.get(email).getContrasenia().equals(contrasenia)){throw new RuntimeException("Contraseña invalida");}
 
         List<IEntrada> entradasAVender = new ArrayList<>();
 
         for (Funcion funcion : funciones.values()) {
-            if (funcion.getNombreEspectaculo().equals(nombreEspectaculo)) {
-                while (entradasAVender.size() < cantidadEntradas) {
-                    entradasAVender.add(new Entrada(fecha, funcion.getPrecioBase()));
-                }
-                funcion.agregarEntrada(cantidadEntradas); // Esto sigue siendo confuso
-                break; // Sal del bucle para no seguir recorriendo otras funciones
+            if(funcion.getNombreEspectaculo().equals(nombreEspectaculo)) {
+                funcion.agregarEntrada(new Entrada(fecha, funcion.getPrecioBase()));
             }
         }
 
-        for(Usuario usuario : usuarios.values()) {
-            usuario.setEntradas(entradasAVender);
-        }
+        entradasAVender = funciones.get(nombreEspectaculo).getEntradasVendidas();
 
         return entradasAVender;
     }
@@ -117,50 +102,36 @@ public class Ticketek implements ITicketek {
     //Venta entradas sedes con sectores
     @Override
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, String sector, int[] asientos) {
-        if(!usuarios.containsKey(email)){
-            throw new RuntimeException("Usuario invalido");
-        }
-
-        if(!usuarios.get(email).getContrasenia().equals(contrasenia)){
-            throw new RuntimeException("Espectaculo invalido");
-        }
-
+        if(!usuarios.containsKey(email)){throw new RuntimeException("Usuario invalido");}
+        if(!usuarios.get(email).getContrasenia().equals(contrasenia)){throw new RuntimeException("Espectaculo invalido");}
+        if(!espectaculos_.containsKey(nombreEspectaculo)){throw new RuntimeException("Espectaculo invalido");}
         if(asientos.length == 0){throw new RuntimeException("Espectaculo invalido");}
-
-        if(!espectaculos_.containsKey(nombreEspectaculo)){
-            throw new RuntimeException("Espectaculo invalido");
-        }
 
         List<IEntrada> entradasAVender = new ArrayList<>();
 
-        /*for(Funcion funcion : funciones.values()){
-            if(funcion.getNombreEspectaculo().equals(nombreEspectaculo) && funcion.getFecha().equals(fecha)) {
-                funcion.agregarEntrada2(sector, asientos.length);
-                entradasAVender.add(new Entrada(fecha, funcion.getPrecioBase()));
+        for(Funcion funcion : funciones.values()){
+            if(funcion.getNombreEspectaculo().equals(nombreEspectaculo)) {
+                for(int i = 0 ; i < asientos.length ; i++) {
+                    funcion.agregarEntrada(new Entrada(nombreEspectaculo, sector,asientos[i],fecha));
+                }
             }
-        }*/
-        for(int i = 0 ; i < asientos.length ; i++){
-            entradasAVender.add(new Entrada(nombreEspectaculo, sector, asientos[i], fecha));
-            //entradasVendidasPorSector.put(sector , asientos[i]);
         }
-
+        entradasAVender = funciones.get(nombreEspectaculo).getEntradasVendidas();
         return entradasAVender;
     }
 
     @Override
     public String listarFunciones(String nombreEspectaculo) {
-        StringBuilder resultado = new StringBuilder();
+       StringBuilder resultado = new StringBuilder();
 
         for (Funcion funcion : funciones.values()) {
             if (funcion.getNombreEspectaculo().equals(nombreEspectaculo)) {
                 Sede sede = funcion.getSede();
 
-                resultado.append(" - (" +funcion.getFecha() + ") " + sede.getNombre() + " - ") ;
+                resultado.append(" - (" + funcion.getFecha() + ") " + sede.getNombre() + " - ") ;
 
                 if (sede instanceof Estadio) {
-                    resultado.append(funcion.getEntradasVendidas())
-                            .append("/")
-                            .append(sede.getCapacidadMax());
+                    resultado.append(funcion.getEntradasVendidas().size() + "/" + sede.getCapacidadMax());
                 }
                 else if (sede instanceof Teatro || sede instanceof MicroEstadio ) {
                     SedeConSectores sedeConSectores = (SedeConSectores) sede;
@@ -169,12 +140,10 @@ public class Ticketek implements ITicketek {
 
                     List<String> sectoresInfo = new ArrayList<>();
                     for (int i = 0; i < sectores.length; i++) {
-                        sectoresInfo.add(sectores[i] + ": " + funcion.getEntradasVendidasPorSector2(sectores[i])+ "/" + capacidades[i]);
+                        sectoresInfo.add(sectores[i] + ": " + funcion.getEntradasVendidas().size() + "/" + capacidades[i]);
                     }
                     resultado.append(String.join(" | ", sectoresInfo));
                 }
-
-                resultado.append("\n");
             }
         }
         return resultado.toString();

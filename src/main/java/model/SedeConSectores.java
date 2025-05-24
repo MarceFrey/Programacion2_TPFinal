@@ -3,12 +3,12 @@ package model;
 import java.util.Arrays;
 
 public class SedeConSectores extends Sede{
-    private Integer asientoPorFila;
+    private int asientoPorFila;
     private String [] sectores;
     private int[] capacidad;
     private int [] porcentajeAdic;
 
-    public SedeConSectores(String nombre, Integer capacidadMax, String direccion, Integer asientoPorFila,
+    public SedeConSectores(String nombre, int capacidadMax, String direccion, int asientoPorFila,
                            String[] sectores, int[] capacidad, int[] porcentajeAdic) {
         super(nombre, capacidadMax, direccion);
         this.asientoPorFila = asientoPorFila;
@@ -17,7 +17,7 @@ public class SedeConSectores extends Sede{
         this.porcentajeAdic = porcentajeAdic;
     }
 
-    public Integer getAsientoPorFila() {
+    public int getAsientoPorFila() {
         return asientoPorFila;
     }
 

@@ -160,7 +160,7 @@ public class Main {
         //ticketek.verFunciones();
         //System.out.println("String Esperado =  - (01/03/25) Microestadio Sur - VIP: 0/50 | Comun: 0/100 | Baja: 4/150 | Alta: 0/200\n");
         //System.out.println(ticketek.listarFunciones("El Rey León"));
-        //System.out.println(ticketek.listarFunciones("Coldplay en vivo"));
+        System.out.println("ACA" + ticketek.listarFunciones("Coldplay en vivo"));
 
     }
 
