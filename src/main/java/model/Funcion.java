@@ -1,18 +1,15 @@
 package model;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import Service.IEntrada;
+
+import java.util.*;
 
 public class Funcion {
     private String nombreEspectaculo;
     private Sede sede;
     private String fecha;
     private double precioBase;
-    private int entradasVendidas = 0;
-
-    private Map<String, Integer> entradasVendidasPorSector = new HashMap<>();
+    private List<IEntrada> entradasVendidas = new ArrayList<>();
 
     public Funcion(String nombreEspectaculo, Sede sede, String fecha, double precioBase) {
         this.nombreEspectaculo = nombreEspectaculo;
@@ -33,26 +30,11 @@ public class Funcion {
 
     public Sede getSede() {return sede;}
 
-    public void agregarEntrada(int cantEntradas){
-        this.entradasVendidas += cantEntradas;
+    public void agregarEntrada(IEntrada entrada){
+        entradasVendidas.add(entrada);
     }
 
-    public int getEntradasVendidas() {
+    public List<IEntrada> getEntradasVendidas() {
         return entradasVendidas;
-    }
-
-    public void agregarEntrada2(String sector , Integer cantidad){
-        entradasVendidasPorSector.put(sector , cantidad);
-    }
-
-    public Map<String, Integer> getEntradasVendidasPorSector() {
-        return entradasVendidasPorSector;
-    }
-
-    public int getEntradasVendidasPorSector2(String sector) {
-        if(!entradasVendidasPorSector.containsKey(sector))
-            return 0;
-        else
-            return entradasVendidasPorSector.get(sector);
     }
 }

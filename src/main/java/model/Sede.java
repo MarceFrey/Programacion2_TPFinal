@@ -2,7 +2,7 @@ package model;
 
 public class Sede {
     private String nombre;
-    private Integer capacidadMax;
+    private int capacidadMax;
     private String direccion;
 
     public Sede(String nombre, Integer capacidadMax, String direccion) {
@@ -15,7 +15,7 @@ public class Sede {
         return nombre;
     }
 
-    public Integer getCapacidadMax() {
+    public int getCapacidadMax() {
         return capacidadMax;
     }
 
