@@ -30,7 +30,7 @@ public class Funcion {
 
     public Sede getSede() {return sede;}
 
-    public void agregarEntrada(Entrada entrada){
+    public void agregarEntrada(IEntrada entrada){
         entradasVendidas.add(entrada);
     }
 

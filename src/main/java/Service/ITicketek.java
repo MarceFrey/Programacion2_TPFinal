@@ -306,4 +306,6 @@ public interface ITicketek {
 
     //-----------------------------------------------------------------//
 
+    void verUsuarios();
+    int verCantidadEntradasDeUsuario (String email);
 }

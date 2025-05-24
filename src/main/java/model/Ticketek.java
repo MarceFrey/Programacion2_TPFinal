@@ -76,7 +76,7 @@ public class Ticketek implements ITicketek {
                     throw new RuntimeException("ya existe una fecha para la función");
             }
         }
-        funciones.put(nombreEspectaculo , new Funcion(nombreEspectaculo, sedes.get(sede), fecha, precioBase));
+        funciones.put(fecha , new Funcion(nombreEspectaculo, sedes.get(sede), fecha, precioBase));
     }
 
     @Override
@@ -89,12 +89,14 @@ public class Ticketek implements ITicketek {
         List<IEntrada> entradasAVender = new ArrayList<>();
 
         for (Funcion funcion : funciones.values()) {
-            if(funcion.getNombreEspectaculo().equals(nombreEspectaculo)) {
-                funcion.agregarEntrada(new Entrada(fecha, funcion.getPrecioBase()));
+            if(funcion.getFecha().equals(fecha)) {
+                for (int i = 0; i < cantidadEntradas; i++) {
+                    funcion.agregarEntrada(new Entrada(fecha, funcion.getPrecioBase()));
+                    entradasAVender = funciones.get(fecha).getEntradasVendidas();
+                }
             }
         }
-
-        entradasAVender = funciones.get(nombreEspectaculo).getEntradasVendidas();
+        usuarios.get(email).setEntradas(entradasAVender);
 
         return entradasAVender;
     }
@@ -110,13 +112,14 @@ public class Ticketek implements ITicketek {
         List<IEntrada> entradasAVender = new ArrayList<>();
 
         for(Funcion funcion : funciones.values()){
-            if(funcion.getNombreEspectaculo().equals(nombreEspectaculo)) {
+            if(funcion.getFecha().equals(fecha)) {
                 for(int i = 0 ; i < asientos.length ; i++) {
                     funcion.agregarEntrada(new Entrada(nombreEspectaculo, sector,asientos[i],fecha));
                 }
             }
         }
-        entradasAVender = funciones.get(nombreEspectaculo).getEntradasVendidas();
+        entradasAVender = funciones.get(fecha).getEntradasVendidas();
+        usuarios.get(email).setEntradas(entradasAVender);
         return entradasAVender;
     }
 
@@ -200,5 +203,19 @@ public class Ticketek implements ITicketek {
     }
 
     //---------------------------------------PRUEBAS-----------------------------------------------------------------------
-
+    public void verUsuarios(){
+        for (Usuario usuario : usuarios.values()){
+            System.out.println(usuario.getEmail());
+        }
+    }
+    public int verCantidadEntradasDeUsuario (String email){
+        int cont = 0;
+        for (Usuario usuario : usuarios.values()){
+            if (usuario.getEmail().equals(email)){
+                cont = usuario.getEntradas().size();
+            }
+        }
+        System.out.println(cont);
+        return cont;
+    }
 }

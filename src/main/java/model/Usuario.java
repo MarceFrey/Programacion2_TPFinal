@@ -2,6 +2,7 @@ package model;
 
 import Service.IEntrada;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario {
@@ -9,7 +10,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String contrasenia;
-    private List<IEntrada> entradas;
+    private List<IEntrada> entradas = new ArrayList<>();
 
     public Usuario(String email, String nombre, String apellido, String contrasenia) {
         this.email = email;
